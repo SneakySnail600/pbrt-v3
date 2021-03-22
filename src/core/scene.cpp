@@ -45,7 +45,34 @@ STAT_COUNTER("Intersections/Shadow ray intersection tests", nShadowTests);
 bool Scene::Intersect(const Ray &ray, SurfaceInteraction *isect) const {
     ++nIntersectionTests;
     DCHECK_NE(ray.d, Vector3f(0,0,0));
-    return aggregate->Intersect(ray, isect);
+
+    // CGRA408 code
+    //---//
+
+    bool intersect = false;
+    if (!ray_has_intersected_once) {
+        std::chrono::high_resolution_clock::time_point time_start =
+            std::chrono::high_resolution_clock::now();
+        //---//
+
+        intersect = aggregate->Intersect(ray, isect);
+
+        // CGRA408 code
+        //---//
+        std::chrono::high_resolution_clock::time_point time_end =
+            std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> time_span =
+            time_end - time_start;
+        std::cout << "\n\\n INTERSECT method took: " << time_span.count()
+                  << " milliseconds" << '\n';
+        ray_has_intersected_once = true;
+    }else {
+        intersect = aggregate->Intersect(ray, isect);
+    }    
+    //---//
+
+    return intersect;
+    //return aggregate->Intersect(ray, isect);
 }
 
 bool Scene::IntersectP(const Ray &ray) const {

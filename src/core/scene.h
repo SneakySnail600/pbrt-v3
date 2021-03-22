@@ -49,6 +49,9 @@ namespace pbrt {
 // Scene Declarations
 class Scene {
   public:
+
+    mutable bool ray_has_intersected_once = false;
+
     // Scene Public Methods
     Scene(std::shared_ptr<Primitive> aggregate,
           const std::vector<std::shared_ptr<Light>> &lights)

@@ -1616,7 +1616,26 @@ void pbrtWorldEnd() {
         CHECK_EQ(CurrentProfilerState(), ProfToBits(Prof::SceneConstruction));
         ProfilerState = ProfToBits(Prof::IntegratorRender);
 
+        // CGRA408 code
+        //---//
+        std::cout << "\n\n\n\n=============================================================================";
+        std::cout << "\nBEGINNING cgra408 STATS: ";
+        std::cout << "\n=============================================================================\n\n";
+        std::chrono::high_resolution_clock::time_point time_start =
+            std::chrono::high_resolution_clock::now();
+        //---//
+
         if (scene && integrator) integrator->Render(*scene);
+
+        // CGRA408 code
+        //---//
+        std::chrono::high_resolution_clock::time_point time_end =
+            std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> time_span =
+            time_end - time_start;
+        std::cout << "\n\n INTEGRATOR render method took: " << time_span.count()
+                  << " milliseconds" << '\n';
+        //---//
 
         CHECK_EQ(CurrentProfilerState(), ProfToBits(Prof::IntegratorRender));
         ProfilerState = ProfToBits(Prof::SceneConstruction);
