@@ -34,6 +34,8 @@
 #define NOMINMAX
 #pragma once
 #endif
+#include <chrono>
+#include <ratio>
 
 #ifndef PBRT_CORE_SCENE_H
 #define PBRT_CORE_SCENE_H
@@ -50,7 +52,12 @@ namespace pbrt {
 class Scene {
   public:
 
-    mutable bool ray_has_intersected_once = false;
+    // CGRA408 code
+    //---//
+    mutable bool rayHasIntersectedOnce = false;
+    mutable float timeSum = 0.0f;
+    mutable unsigned int numOfIntersections = 0;
+    //---//
 
     // Scene Public Methods
     Scene(std::shared_ptr<Primitive> aggregate,
