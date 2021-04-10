@@ -1,0 +1,8 @@
+Film "image"
+   "string filename" ["cornell.png"]
+   "integer xresolution" [1]
+   "integer yresolution" [1]
+
+WorldBegin
+
+WorldEnd

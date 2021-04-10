@@ -33,6 +33,9 @@
 
 // core/film.cpp*
 #include "film.h"
+
+#include <direct.h>
+
 #include "paramset.h"
 #include "imageio.h"
 #include "stats.h"
@@ -204,10 +207,23 @@ void Film::WriteImage(Float splatScale) {
         ++offset;
     }
 
+    // CGRA408 code
+    //---//
+
+    // Create an output directory for the final image
+    std::string output_dir = std::string(SOLUTION_DIR) + "../output";
+    mkdir(output_dir.c_str());
+    //---//
+
     // Write RGB image
     LOG(INFO) << "Writing image " << filename << " with bounds " <<
         croppedPixelBounds;
-    pbrt::WriteImage(filename, &rgb[0], croppedPixelBounds, fullResolution);
+
+    // CGRA408 code
+    //---//
+    pbrt::WriteImage(output_dir + "/" + filename, &rgb[0], croppedPixelBounds, fullResolution);
+    //---//
+    // pbrt::WriteImage(filename, &rgb[0], croppedPixelBounds, fullResolution);
 }
 
 Film *CreateFilm(const ParamSet &params, std::unique_ptr<Filter> filter) {
