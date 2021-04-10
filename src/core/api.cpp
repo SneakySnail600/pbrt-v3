@@ -1616,19 +1616,7 @@ void pbrtWorldEnd() {
         CHECK_EQ(CurrentProfilerState(), ProfToBits(Prof::SceneConstruction));
         ProfilerState = ProfToBits(Prof::IntegratorRender);
 
-        // CGRA408 code
-        //---//
-        std::cout << "\n\n\n\n=============================================================================";
-        std::cout << "\nBEGINNING cgra408 STATS: ";
-        std::cout << "\n=============================================================================\n\n";
-        //---//
-
         if (scene && integrator) integrator->Render(*scene);
-
-        // CGRA408 code
-        //---//
-        std::cout << "\n\nAVERAGE intersection time is: " << scene->timeSum / (float) scene->numOfIntersections << " milliseconds\n\n";
-        //---//
 
         CHECK_EQ(CurrentProfilerState(), ProfToBits(Prof::IntegratorRender));
         ProfilerState = ProfToBits(Prof::SceneConstruction);

@@ -47,38 +47,7 @@
 #include <functional>
 #include <mutex>
 
-// CGRA408 code
-//---//
-//
-//std::map<std::string, std::chrono::high_resolution_clock::time_point>
-//    time_stamps;
-//
-//inline void cgra408_start_timer(std::string method_name) {
-//    std::chrono::high_resolution_clock::time_point time_start =
-//        std::chrono::high_resolution_clock::now();
-//    time_stamps[method_name] = time_start;
-//}
-//
-//inline void cgra408_end_timer(std::string method_name) {
-//    std::chrono::high_resolution_clock::time_point time_end =
-//        std::chrono::high_resolution_clock::now();
-//    std::chrono::duration<double, std::milli> time_span =
-//        time_end - time_stamps[method_name];
-//    std::cout << "\n\n"
-//              << method_name << " method took: " << time_span.count()
-//              << " milliseconds" << '\n';
-//}
-//---//
-
 namespace pbrt {
-
-// CGRA408 code
-//---//
-//class cgra408_stats {
-//  public:
-//    bool ray_has_intersected_once = false;
-//};
-//---//
 
 // Statistics Declarations
 class StatsAccumulator;

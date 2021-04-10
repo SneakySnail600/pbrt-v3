@@ -1,5 +1,5 @@
 *~
-**/build
-**/bin
-**/objs
-**.sconsign.dblite
+src/build
+src/bin
+src/objs
+.sconsign.dblite
