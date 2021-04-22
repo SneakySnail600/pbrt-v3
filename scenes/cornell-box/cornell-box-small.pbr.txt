@@ -4,7 +4,7 @@ PixelFilter "mitchell" "float xwidth" [3] "float ywidth" [3]
 # Accelerator "kdtree"
 Sampler "halton" "integer pixelsamples" [128]
 Film "image"
-   "string filename" ["cornell.png"]
+   "string filename" ["cornell-small.png"]
    "integer xresolution" [480]
    "integer yresolution" [480]
 

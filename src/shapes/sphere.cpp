@@ -42,8 +42,25 @@ namespace pbrt {
 
 // Sphere Method Definitions
 Bounds3f Sphere::ObjectBound() const {
-    return Bounds3f(Point3f(-radius, -radius, zMin),
+
+    // CGRA408 code
+    //---//
+    Float xMin = -radius;
+    Float yMin = -radius;
+    if (phiMax < 3.0f*Pi/2.0f) {
+        // Set theta to 0, so that we are dealing in the flat x, y plane (z = 0) for our calculations
+        Float theta = 0.0f;
+        yMin = std::min(radius * sin(theta) * sin(phiMax), 0.0f);
+        if (phiMax < Pi) {
+            xMin = std::min(radius * sin(theta) * cos(phiMax), 0.0f);
+        }
+    }
+    return Bounds3f(Point3f(xMin, yMin, zMin),
                     Point3f(radius, radius, zMax));
+    //---//
+
+    //return Bounds3f(Point3f(-radius, -radius, zMin),
+    //                Point3f(radius, radius, zMax));
 }
 
 bool Sphere::Intersect(const Ray &r, Float *tHit, SurfaceInteraction *isect,

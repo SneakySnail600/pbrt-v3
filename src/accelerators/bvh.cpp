@@ -77,7 +77,7 @@ struct BVHBuildNode {
         nPrimitives = 0;
         ++interiorNodes;
     }
-    Bounds3f bounds;
+    Bounds3f bounds;    
     BVHBuildNode *children[2];
     int splitAxis, firstPrimOffset, nPrimitives;
 };
