@@ -18,7 +18,8 @@ LightSource "distant"  "point from" [ -30 40  100 ]
    "blackbody L" [3000 1.5]
 
 AttributeBegin
-  Material "ice"
+#  Material "ice" "float uroughness" 0.00005 "float vroughness" 0.00005
+  Material "ice" "float uroughness" 0 "float vroughness" 0
   Shape "sphere" "float radius" 1
 AttributeEnd
 
