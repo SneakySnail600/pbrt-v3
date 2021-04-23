@@ -67,6 +67,7 @@
 #include "lights/point.h"
 #include "lights/projection.h"
 #include "lights/spot.h"
+#include "materials/ice.h"
 #include "materials/disney.h"
 #include "materials/fourier.h"
 #include "materials/glass.h"
@@ -586,6 +587,13 @@ std::shared_ptr<Material> MakeMaterial(const std::string &name,
         material = CreateKdSubsurfaceMaterial(mp);
     else if (name == "fourier")
         material = CreateFourierMaterial(mp);
+
+    // CGRA408 code
+    //---//
+    else if (name == "ice")
+        material = CreateIceMaterial(mp);
+    //---//
+    
     else {
         Warning("Material \"%s\" unknown. Using \"matte\".", name.c_str());
         material = CreateMatteMaterial(mp);
