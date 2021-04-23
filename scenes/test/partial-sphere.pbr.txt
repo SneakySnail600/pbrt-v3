@@ -33,7 +33,7 @@ AttributeBegin
       640 0.609 644 0.651 648 0.612 652 0.610 656 0.650 660 0.638
       664 0.627 668 0.620 672 0.630 676 0.628 680 0.642 684 0.639
       688 0.657 692 0.639 696 0.635 700 0.642]
-  Shape "sphere" "float radius" 1 "float phimax" 0
+  Shape "sphere" "float radius" 1 "float phimax" 350
 AttributeEnd
 
 AttributeBegin

@@ -45,33 +45,33 @@ Bounds3f Sphere::ObjectBound() const {
 
     // CGRA408 code
     //---//
-    //if (phiMax == 0.0f) {
-    //    return Bounds3f(Point3f(0.0f, 0.0f, 0.0f), Point3f(0.0f, 0.0f, 0.0f));
-    //}
-    //Float xMin = -radius;
-    //Float yMin = -radius;
-    //Float xMax = radius;
-    //Float yMax = radius;
-    //// Set theta to 0, so that we are dealing in the flat x, y plane (z = 0) for
-    //// our calculations
-    //Float theta = Pi / 2.0f;
-    //if (phiMax < Pi/2.0f) {
-    //    xMin = 0.0f;
-    //    yMin = 0.0f;
-    //    yMax = radius * sin(theta) * sin(phiMax);
-    //}
-    //else if (phiMax < Pi) {
-    //    yMin = 0.0f;
-    //    xMin = radius * sin(theta) * cos(phiMax);
-    //}
-    //else if (phiMax < 3.0f*Pi/2.0f) {
-    //    yMin = radius * sin(theta) * sin(phiMax);
-    //}
-    //return Bounds3f(Point3f(xMin, yMin, zMin), Point3f(xMax, yMax, zMax));
+    if (phiMax == 0.0f) {
+        return Bounds3f(Point3f(0.0f, 0.0f, 0.0f), Point3f(0.0f, 0.0f, 0.0f));
+    }
+    Float xMin = -radius;
+    Float yMin = -radius;
+    Float xMax = radius;
+    Float yMax = radius;
+    // Set theta to 0, so that we are dealing in the flat x, y plane (z = 0) for
+    // our calculations
+    Float theta = Pi / 2.0f;
+    if (phiMax < Pi/2.0f) {
+        xMin = 0.0f;
+        yMin = 0.0f;
+        yMax = radius * sin(theta) * sin(phiMax);
+    }
+    else if (phiMax < Pi) {
+        yMin = 0.0f;
+        xMin = radius * sin(theta) * cos(phiMax);
+    }
+    else if (phiMax < 3.0f*Pi/2.0f) {
+        yMin = radius * sin(theta) * sin(phiMax);
+    }
+    return Bounds3f(Point3f(xMin, yMin, zMin), Point3f(xMax, yMax, zMax));
     //---//
 
-    return Bounds3f(Point3f(-radius, -radius, zMin),
-                    Point3f(radius, radius, zMax));
+    //return Bounds3f(Point3f(-radius, -radius, zMin),
+    //                Point3f(radius, radius, zMax));
 }
 
 bool Sphere::Intersect(const Ray &r, Float *tHit, SurfaceInteraction *isect,
