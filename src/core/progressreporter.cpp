@@ -135,13 +135,27 @@ void ProgressReporter::PrintBar() {
         // Update elapsed time and estimated time to completion
         Float seconds = ElapsedMS() / 1000.f;
         Float estRemaining = seconds / percentDone - seconds;
+
+        // CGRA408 code
+        //---//
         if (percentDone == 1.f)
-            printf(" (%.1fs)       ", seconds);
+            printf(" (%.4fs)       ", seconds);
         else if (!std::isinf(estRemaining))
-            printf(" (%.1fs|%.1fs)  ", seconds,
+            printf(" (%.4fs|%.4fs)  ", seconds,
                    std::max((Float)0., estRemaining));
-        else
-            printf(" (%.1fs|?s)  ", seconds);
+        else {
+            printf(" (%.4fs|?s)  ", seconds);
+        }
+        //---//
+
+        //if (percentDone == 1.f)
+        //    printf(" (%.1fs)       ", seconds);
+        //else if (!std::isinf(estRemaining))
+        //    printf(" (%.1fs|%.1fs)  ", seconds,
+        //           std::max((Float)0., estRemaining));
+        //else {
+        //    printf(" (%.1fs|?s)  ", seconds);
+        //}
         fflush(stdout);
     }
 }

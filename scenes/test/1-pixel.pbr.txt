@@ -1,5 +1,5 @@
 Film "image"
-   "string filename" ["cornell.png"]
+   "string filename" ["cornell-1-pixel.png"]
    "integer xresolution" [1]
    "integer yresolution" [1]
 
