@@ -2,8 +2,8 @@ LookAt 3 4 1.5  # eye
        .5 .5 0  # look at point
        0 0 1    # up vector
 Camera "perspective" "float fov" 45
-
-Sampler "halton" "integer pixelsamples" 10
+Accelerator "bvh"
+Sampler "halton" "integer pixelsamples" 128
 Integrator "path"
 Film "image" "string filename" "material-sphere.png"
      "integer xresolution" [400] "integer yresolution" [400]
@@ -11,17 +11,17 @@ Film "image" "string filename" "material-sphere.png"
 WorldBegin
 
 # point lights inside the skybox
-LightSource "point" "point from" [ -4 -10 0 ] "rgb I" [ 100 100 100 ]
+LightSource "point" "point from" [ -8 4 4 ] "rgb I" [ 300 300 300 ]
 # LightSource "point" "point from" [ 4 -10 0 ] "rgb I" [ 100 100 100 ]
 # LightSource "point" "point from" [ 1 4 -1 ] "rgb I" [ 10 10 10 ]
 # LightSource "point" "point from" [ -1 4 -1 ] "rgb I" [ 10 10 10 ]
 
 AttributeBegin
-  Material "ice" "float uroughness" 0.00005 "float vroughness" 0.00005
+  Material "ice" "float uroughness" 0.005 "float vroughness" 0.005
   Shape "sphere" "float radius" 1 
 AttributeEnd
 
-# cube mesh
+# cube mesh background
 AttributeBegin
 Scale 16 16 16
 Texture "snow" "spectrum" "imagemap" "string filename" "../../textures/ice-2.png"
