@@ -1,5 +1,5 @@
-LookAt 0 4 0  # eye
-       0 0 0  # look at point
+LookAt 3 4 1.5  # eye
+       .5 .5 0  # look at point
        0 0 1    # up vector
 Camera "perspective" "float fov" 45
 
@@ -11,8 +11,10 @@ Film "image" "string filename" "material-sphere.png"
 WorldBegin
 
 # point lights inside the skybox
-LightSource "point" "point from" [ 1 2 1 ] "rgb I" [ 10 10 10 ]
-LightSource "point" "point from" [ -1 2 1 ] "rgb I" [ 10 10 10 ]
+LightSource "point" "point from" [ -4 -10 0 ] "rgb I" [ 100 100 100 ]
+# LightSource "point" "point from" [ 4 -10 0 ] "rgb I" [ 100 100 100 ]
+# LightSource "point" "point from" [ 1 4 -1 ] "rgb I" [ 10 10 10 ]
+# LightSource "point" "point from" [ -1 4 -1 ] "rgb I" [ 10 10 10 ]
 
 AttributeBegin
   Material "ice" "float uroughness" 0.00005 "float vroughness" 0.00005
@@ -21,9 +23,9 @@ AttributeEnd
 
 # cube mesh
 AttributeBegin
-Scale 4 4 4
-Texture "snow" "spectrum" "imagemap" "string filename" "../../textures/snow-1.exr"
-MakeNamedMaterial "mymirror" "string type" "mirror"
+Scale 16 16 16
+Texture "snow" "spectrum" "imagemap" "string filename" "../../textures/ice-2.png"
+MakeNamedMaterial "mymirror" "string type" "mirror" "spectrum Kr" [ 3 3 ]
 MakeNamedMaterial "mymatte" "string type" "matte" "texture Kd" "snow"
 Material "mix" "string namedmaterial1" "mymirror" "string namedmaterial2" "mymatte"
 Shape "trianglemesh"
