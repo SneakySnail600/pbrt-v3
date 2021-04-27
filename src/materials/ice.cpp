@@ -41,7 +41,7 @@
 
 namespace pbrt {
 
-// GlassMaterial Method Definitions
+// IceMaterial Method Definitions
 void IceMaterial::ComputeScatteringFunctions(SurfaceInteraction *si,
                                                MemoryArena &arena,
                                                TransportMode mode,
@@ -93,9 +93,9 @@ void IceMaterial::ComputeScatteringFunctions(SurfaceInteraction *si,
 
 IceMaterial *CreateIceMaterial(const TextureParams &mp) {
     std::shared_ptr<Texture<Spectrum>> Kr =
-        mp.GetSpectrumTexture("Kr", Spectrum(1.f));
+        mp.GetSpectrumTexture("Kr", Spectrum(3.f));
     std::shared_ptr<Texture<Spectrum>> Kt =
-        mp.GetSpectrumTexture("Kt", Spectrum(1.f));
+        mp.GetSpectrumTexture("Kt", Spectrum(3.f));
     std::shared_ptr<Texture<Float>> eta = mp.GetFloatTextureOrNull("eta");
     if (!eta) eta = mp.GetFloatTexture("index", 1.31f);
     std::shared_ptr<Texture<Float>> roughu =

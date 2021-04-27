@@ -19,7 +19,7 @@ LightSource "point" "point from" [ -8 4 4 ] "rgb I" [ 300 300 300 ]
 AttributeBegin
   # Texture "myicekr" "spectrum" "icekr"
   Material "ice"
-  # "texture Kr" "myicekr"
+  # Material "matte" "texture Kd" "myicekr"
   Shape "sphere" "float radius" 1
 AttributeEnd
 
