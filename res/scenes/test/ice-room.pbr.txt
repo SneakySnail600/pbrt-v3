@@ -3,30 +3,32 @@ LookAt 3 4 1.5  # eye
        0 0 1    # up vector
 Camera "perspective" "float fov" 45
 Accelerator "bvh"
-Sampler "halton" "integer pixelsamples" 128
+Sampler "halton" "integer pixelsamples" 100
 Integrator "path"
-Film "image" "string filename" "material-sphere.png"
+Film "image" "string filename" "ice-room.png"
      "integer xresolution" [400] "integer yresolution" [400]
 
 WorldBegin
 
-# point lights inside the skybox
+# point lights inside the room
 LightSource "point" "point from" [ -8 4 4 ] "rgb I" [ 300 300 300 ]
 # LightSource "point" "point from" [ 4 -10 0 ] "rgb I" [ 100 100 100 ]
 # LightSource "point" "point from" [ 1 4 -1 ] "rgb I" [ 10 10 10 ]
 # LightSource "point" "point from" [ -1 4 -1 ] "rgb I" [ 10 10 10 ]
 
 AttributeBegin
-  Material "ice" "float uroughness" 0.005 "float vroughness" 0.005
-  Shape "sphere" "float radius" 1 
+  # Texture "myicekr" "spectrum" "icekr"
+  Material "ice"
+  # "texture Kr" "myicekr"
+  Shape "sphere" "float radius" 1
 AttributeEnd
 
-# cube mesh background
+# room cube mesh
 AttributeBegin
 Scale 16 16 16
-Texture "snow" "spectrum" "imagemap" "string filename" "../../textures/ice-2.png"
+Texture "ice" "spectrum" "imagemap" "string filename" "../../textures/ice-2.png"
 MakeNamedMaterial "mymirror" "string type" "mirror" "spectrum Kr" [ 3 3 ]
-MakeNamedMaterial "mymatte" "string type" "matte" "texture Kd" "snow"
+MakeNamedMaterial "mymatte" "string type" "matte" "texture Kd" "ice"
 Material "mix" "string namedmaterial1" "mymirror" "string namedmaterial2" "mymatte"
 Shape "trianglemesh"
   "point3 P" [ 

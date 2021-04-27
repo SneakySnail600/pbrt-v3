@@ -119,6 +119,8 @@
 #include <map>
 #include <stdio.h>
 
+#include "textures/icekr.h"
+
 namespace pbrt {
 
 // API Global Variables
@@ -680,6 +682,13 @@ std::shared_ptr<Texture<Spectrum>> MakeSpectrumTexture(
         tex = CreateWindySpectrumTexture(tex2world, tp);
     else if (name == "ptex")
         tex = CreatePtexSpectrumTexture(tex2world, tp);
+
+    // CGRA408 code
+    //---//
+    else if (name == "icekr")
+        tex = CreateIceKrSpectrumTexture(tex2world, tp);
+    //---//
+
     else
         Warning("Spectrum texture \"%s\" unknown.", name.c_str());
     tp.ReportUnused();
@@ -1635,7 +1644,7 @@ void pbrtWorldEnd() {
 
         // CGRA408 code
         //---//
-        std::cout << "\n\nAVERAGE intersection time is: " << scene->timeSum / (float) scene->numOfIntersections << " milliseconds\n\n";
+        //std::cout << "\n\nAVERAGE intersection time is: " << scene->timeSum / (float) scene->numOfIntersections << " milliseconds\n\n";
         //---//
 
         CHECK_EQ(CurrentProfilerState(), ProfToBits(Prof::IntegratorRender));

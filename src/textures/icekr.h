@@ -34,61 +34,49 @@
 #define NOMINMAX
 #pragma once
 #endif
-#include <chrono>
-#include <ratio>
 
-#ifndef PBRT_CORE_SCENE_H
-#define PBRT_CORE_SCENE_H
+#ifndef PBRT_TEXTURES_ICEKR_H
+#define PBRT_TEXTURES_ICEKR_H
 
-// core/scene.h*
+// textures/dots.h*
 #include "pbrt.h"
-#include "geometry.h"
-#include "primitive.h"
-#include "light.h"
+#include "texture.h"
+#include "paramset.h"
 
 namespace pbrt {
 
-// Scene Declarations
-class Scene {
+// IceKrTexture Declarations
+template <typename T>
+class IceKrTexture : public Texture<T> {
   public:
-
-    // CGRA408 code
-    //---//
-    //mutable bool rayHasIntersectedOnce = false;
-    //mutable float timeSum = 0.0f;
-    //mutable unsigned int numOfIntersections = 0;
-    //---//
-
-    // Scene Public Methods
-    Scene(std::shared_ptr<Primitive> aggregate,
-          const std::vector<std::shared_ptr<Light>> &lights)
-        : lights(lights), aggregate(aggregate) {
-        // Scene Constructor Implementation
-        worldBound = aggregate->WorldBound();
-        for (const auto &light : lights) {
-            light->Preprocess(*this);
-            if (light->flags & (int)LightFlags::Infinite)
-                infiniteLights.push_back(light);
-        }
+    // IceKrTexture Public Methods
+    IceKrTexture(const T &value, std::unique_ptr<TextureMapping2D> mapping)
+        : value(value), mapping(std::move(mapping)) {}
+    T Evaluate(const SurfaceInteraction &si) const {
+        Vector2f dstdx, dstdy;
+        Point2f st = mapping->Map(si, &dstdx, &dstdy);   
+        Float gaussian_s = 1.f / (sd * sqrt(2.f * Pi)) *
+                         exp(-1.f / 2.f * pow((st[0] - mean) / sd, 2.f));
+        Float gaussian_t = 1.f / (sd * sqrt(2.f * Pi)) *
+                           exp(-1.f / 2.f * pow((st[1] - mean) / sd, 2.f));
+        return Clamp(gaussian_s, 0.f, 1.f) * Clamp(gaussian_t, 0.f, 1.f) *
+               pow(sd, 1.5f);
     }
-    const Bounds3f &WorldBound() const { return worldBound; }
-    bool Intersect(const Ray &ray, SurfaceInteraction *isect) const;
-    bool IntersectP(const Ray &ray) const;
-    bool IntersectTr(Ray ray, Sampler &sampler, SurfaceInteraction *isect,
-                     Spectrum *transmittance) const;
-
-    // Scene Public Data
-    std::vector<std::shared_ptr<Light>> lights;
-    // Store infinite light sources separately for cases where we only want
-    // to loop over them.
-    std::vector<std::shared_ptr<Light>> infiniteLights;
-
+   
   private:
-    // Scene Private Data
-    std::shared_ptr<Primitive> aggregate;
-    Bounds3f worldBound;
+    T value;
+    std::unique_ptr<TextureMapping2D> mapping;
+    // Gaussian mean
+    Float mean = 0.5f;
+    // Gaussian standard deviation
+    Float sd = 10.f;
 };
+
+IceKrTexture<Float> *CreateIceKrFloatTexture(const Transform &tex2world,
+                                          const TextureParams &tp);
+IceKrTexture<Spectrum> *CreateIceKrSpectrumTexture(
+    const Transform &tex2world, const TextureParams &tp);
 
 }  // namespace pbrt
 
-#endif  // PBRT_CORE_SCENE_H
+#endif  // PBRT_TEXTURES_CONSTANT_H

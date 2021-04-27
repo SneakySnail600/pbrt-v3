@@ -1,0 +1,19 @@
+// CGRA408 code
+//---//
+
+//---//
+
+// CGRA408 code
+//---//
+std::chrono::high_resolution_clock::time_point time_start = std::chrono::high_resolution_clock::now();
+//---//
+
+// CGRA408 code
+//---//
+std::chrono::high_resolution_clock::time_point time_end = std::chrono::high_resolution_clock::now();
+std::chrono::duration<double, std::milli> time_span = time_end - time_start;
+std::cout << "\n\nINTEGRATOR render method took: " << time_span.count() << " milliseconds" << '\n';
+//---//
+
+
+ -> Integrator: "path", Accelerator: "bvh"

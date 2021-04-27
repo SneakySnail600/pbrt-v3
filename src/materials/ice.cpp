@@ -99,9 +99,9 @@ IceMaterial *CreateIceMaterial(const TextureParams &mp) {
     std::shared_ptr<Texture<Float>> eta = mp.GetFloatTextureOrNull("eta");
     if (!eta) eta = mp.GetFloatTexture("index", 1.31f);
     std::shared_ptr<Texture<Float>> roughu =
-        mp.GetFloatTexture("uroughness", 0.f);
+        mp.GetFloatTexture("uroughness", 0.001f);
     std::shared_ptr<Texture<Float>> roughv =
-        mp.GetFloatTexture("vroughness", 0.f);
+        mp.GetFloatTexture("vroughness", 0.001f);
     std::shared_ptr<Texture<Float>> bumpMap =
         mp.GetFloatTextureOrNull("bumpmap");
     bool remapRoughness = mp.FindBool("remaproughness", true);

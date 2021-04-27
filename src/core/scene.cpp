@@ -78,11 +78,11 @@ bool Scene::Intersect(const Ray &ray, SurfaceInteraction *isect) const {
 
     // CGRA408 code
     //---//
-    std::chrono::high_resolution_clock::time_point time_end =
-        std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double, std::milli> time_span = time_end - time_start;
-    timeSum += time_span.count();
-    ++numOfIntersections;
+    //std::chrono::high_resolution_clock::time_point time_end =
+    //    std::chrono::high_resolution_clock::now();
+    //std::chrono::duration<double, std::milli> time_span = time_end - time_start;
+    //timeSum += time_span.count();
+    //++numOfIntersections;
     //---//
 
     return intersect;

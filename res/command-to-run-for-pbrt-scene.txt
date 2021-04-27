@@ -1,0 +1,3 @@
+Run this command in the same folder as the .exe file, with the scene file in this location as well:
+
+./pbrt.exe <scene-file-name>.pbr.txt
