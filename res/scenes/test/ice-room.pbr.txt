@@ -3,7 +3,7 @@ LookAt 3 4 1.5  # eye
        0 0 1    # up vector
 Camera "perspective" "float fov" 45
 Accelerator "bvh"
-Sampler "halton" "integer pixelsamples" 100
+Sampler "halton" "integer pixelsamples" 128
 Integrator "path"
 Film "image" "string filename" "ice-room.png"
      "integer xresolution" [400] "integer yresolution" [400]
@@ -12,14 +12,10 @@ WorldBegin
 
 # point lights inside the room
 LightSource "point" "point from" [ -8 4 4 ] "rgb I" [ 300 300 300 ]
-# LightSource "point" "point from" [ 4 -10 0 ] "rgb I" [ 100 100 100 ]
-# LightSource "point" "point from" [ 1 4 -1 ] "rgb I" [ 10 10 10 ]
-# LightSource "point" "point from" [ -1 4 -1 ] "rgb I" [ 10 10 10 ]
 
 AttributeBegin
-  # Texture "myicekr" "spectrum" "icekr"
-  Material "ice"
-  # Material "matte" "texture Kd" "myicekr"
+  Texture "myicekr" "spectrum" "icekr" "string mapping" "spherical"
+  Material "ice" "texture Kd" "myicekr"
   Shape "sphere" "float radius" 1
 AttributeEnd
 

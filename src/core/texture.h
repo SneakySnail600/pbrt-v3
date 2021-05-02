@@ -147,6 +147,13 @@ Float FBm(const Point3f &p, const Vector3f &dpdx, const Vector3f &dpdy,
 Float Turbulence(const Point3f &p, const Vector3f &dpdx, const Vector3f &dpdy,
                  Float omega, int octaves);
 
+// CGRA408 code
+//---//
+Float NormDist(Float x, Float mean, Float sd);
+
+Float MultiNormDist(Float x, std::vector<Point2f> meansAndSds);
+//---//
+
 }  // namespace pbrt
 
 #endif  // PBRT_CORE_TEXTURE_H

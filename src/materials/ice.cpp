@@ -89,13 +89,20 @@ void IceMaterial::ComputeScatteringFunctions(SurfaceInteraction *si,
                     T, distrib, 1.f, eta, mode));
         }
     }
+
+    Spectrum r = Kd->Evaluate(*si).Clamp();
+    if (!r.IsBlack()) {
+        si->bsdf->Add(ARENA_ALLOC(arena, LambertianReflection)(r));
+    }
 }
 
 IceMaterial *CreateIceMaterial(const TextureParams &mp) {
+    std::shared_ptr<Texture<Spectrum>> Kd =
+        mp.GetSpectrumTexture("Kd", Spectrum(0.5f));
     std::shared_ptr<Texture<Spectrum>> Kr =
-        mp.GetSpectrumTexture("Kr", Spectrum(3.f));
+        mp.GetSpectrumTexture("Kr", Spectrum(2.f));
     std::shared_ptr<Texture<Spectrum>> Kt =
-        mp.GetSpectrumTexture("Kt", Spectrum(3.f));
+        mp.GetSpectrumTexture("Kt", Spectrum(2.f));
     std::shared_ptr<Texture<Float>> eta = mp.GetFloatTextureOrNull("eta");
     if (!eta) eta = mp.GetFloatTexture("index", 1.31f);
     std::shared_ptr<Texture<Float>> roughu =
@@ -105,7 +112,7 @@ IceMaterial *CreateIceMaterial(const TextureParams &mp) {
     std::shared_ptr<Texture<Float>> bumpMap =
         mp.GetFloatTextureOrNull("bumpmap");
     bool remapRoughness = mp.FindBool("remaproughness", true);
-    return new IceMaterial(Kr, Kt, roughu, roughv, eta, bumpMap,
+    return new IceMaterial(Kd, Kr, Kt, roughu, roughv, eta, bumpMap,
                              remapRoughness);
 }
 

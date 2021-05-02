@@ -119,6 +119,9 @@
 #include <map>
 #include <stdio.h>
 
+
+#include "accelerators/bsptreeaccel.h"
+#include "accelerators/octtreeaccel.h"
 #include "textures/icekr.h"
 
 namespace pbrt {
@@ -793,6 +796,15 @@ std::shared_ptr<Primitive> MakeAccelerator(
         accel = CreateBVHAccelerator(std::move(prims), paramSet);
     else if (name == "kdtree")
         accel = CreateKdTreeAccelerator(std::move(prims), paramSet);
+
+    // CGRA408 code
+    //---//
+    else if (name == "octtree")
+        accel = CreateOctTreeAccelerator(std::move(prims), paramSet);
+    else if (name == "bsptree")
+        accel = CreateBspTreeAccelerator(std::move(prims), paramSet);
+    //---//
+
     else
         Warning("Accelerator \"%s\" unknown.", name.c_str());
     paramSet.ReportUnused();

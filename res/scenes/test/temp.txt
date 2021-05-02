@@ -1,4 +1,7 @@
-# approximate the sun
+# uniform blue-ish illumination from all directions
+LightSource "infinite" "rgb L" [.4 .45 .5]
+
+# sun
 LightSource "distant"  "point from" [ -30 40  100 ]
    "blackbody L" [3000 1.5]
 
@@ -8,7 +11,7 @@ LookAt 0 4 0  # eye
 	   
 AttributeBegin
   Material "ice" "float uroughness" 0.005 "float vroughness" 0.005
-  Shape "sphere" "float radius" 1 
+  Shape "sphere" "float radius" 1
 AttributeEnd
 
 # cube mesh

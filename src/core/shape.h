@@ -86,6 +86,13 @@ class Shape {
     const Transform *ObjectToWorld, *WorldToObject;
     const bool reverseOrientation;
     const bool transformSwapsHandedness;
+
+    // CGRA408 code
+    //---//
+    virtual bool IsTriangle() { return false; }
+    virtual Point3f GetTrianglePos() { return Point3f(0, 0, 0); }
+    virtual Normal3f GetTriangleNormal() { return Normal3f(0, 0, 0); }
+    //---//
 };
 
 }  // namespace pbrt

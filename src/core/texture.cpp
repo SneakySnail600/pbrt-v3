@@ -261,4 +261,31 @@ Float Lanczos(Float x, Float tau) {
     return s * lanczos;
 }
 
+// CGRA408 code
+//---//
+Float NormDist(Float x, Float mean, Float sd) {
+    if (sd < 0.000001f) {
+        sd = 0.000001f;
+    }
+    return 1.f / (sd * sqrt(2.f * Pi)) *
+                       exp(-1.f / 2.f * pow((x - mean) / sd, 2.f));
+}
+
+Float MultiNormDist(Float x, std::vector<Point2f> meansAndSds) {
+    if (meansAndSds.size() == 0) {
+        return 0.0f;
+    }
+    Float result = 1.0f;
+    for (Point2f meanAndSd : meansAndSds) {
+        Float mean = meanAndSd.x;
+        Float sd = meanAndSd.y;
+        Float normVal = NormDist(x, mean, sd);
+        result += normVal;
+        //result *= normVal;
+    }
+    return result / meansAndSds.size();
+    //return result;
+}
+//---//
+
 }  // namespace pbrt

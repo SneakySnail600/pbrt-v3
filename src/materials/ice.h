@@ -48,14 +48,16 @@ namespace pbrt {
 class IceMaterial : public Material {
   public:
     // IceMaterial Public Methods
-    IceMaterial(const std::shared_ptr<Texture<Spectrum>> &Kr,
+    IceMaterial(const std::shared_ptr<Texture<Spectrum>> &Kd,
+                const std::shared_ptr<Texture<Spectrum>> &Kr,
                   const std::shared_ptr<Texture<Spectrum>> &Kt,
                   const std::shared_ptr<Texture<Float>> &uRoughness,
                   const std::shared_ptr<Texture<Float>> &vRoughness,
                   const std::shared_ptr<Texture<Float>> &index,
                   const std::shared_ptr<Texture<Float>> &bumpMap,
                   bool remapRoughness)
-        : Kr(Kr),
+        : Kd(Kd),
+          Kr(Kr),
           Kt(Kt),
           uRoughness(uRoughness),
           vRoughness(vRoughness),
@@ -68,7 +70,7 @@ class IceMaterial : public Material {
 
   private:
     // IceMaterial Private Data
-    std::shared_ptr<Texture<Spectrum>> Kr, Kt;
+    std::shared_ptr<Texture<Spectrum>> Kd, Kr, Kt;
     std::shared_ptr<Texture<Float>> uRoughness, vRoughness;
     std::shared_ptr<Texture<Float>> index;
     std::shared_ptr<Texture<Float>> bumpMap;

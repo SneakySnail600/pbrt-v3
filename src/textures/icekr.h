@@ -51,25 +51,38 @@ class IceKrTexture : public Texture<T> {
   public:
     // IceKrTexture Public Methods
     IceKrTexture(const T &value, std::unique_ptr<TextureMapping2D> mapping)
-        : value(value), mapping(std::move(mapping)) {}
+        : value(value), mapping(std::move(mapping)) {
+        meansAndSdsS.push_back(Point2f(0.2, sd));
+        meansAndSdsS.push_back(Point2f(0.9, sd));
+        meansAndSdsS.push_back(Point2f(0.12, sd));
+        meansAndSdsS.push_back(Point2f(0.01, sd));
+        meansAndSdsS.push_back(Point2f(0.5, sd));
+
+        meansAndSdsT.push_back(Point2f(0.05, sd));
+        meansAndSdsT.push_back(Point2f(0.63, sd));
+        meansAndSdsT.push_back(Point2f(0.46, sd));
+        meansAndSdsT.push_back(Point2f(0.91, sd));
+        meansAndSdsT.push_back(Point2f(0.09, sd));
+    }
     T Evaluate(const SurfaceInteraction &si) const {
+        // CGRA408 code
+        //---//
         Vector2f dstdx, dstdy;
-        Point2f st = mapping->Map(si, &dstdx, &dstdy);   
-        Float gaussian_s = 1.f / (sd * sqrt(2.f * Pi)) *
-                         exp(-1.f / 2.f * pow((st[0] - mean) / sd, 2.f));
-        Float gaussian_t = 1.f / (sd * sqrt(2.f * Pi)) *
-                           exp(-1.f / 2.f * pow((st[1] - mean) / sd, 2.f));
-        return Clamp(gaussian_s, 0.f, 1.f) * Clamp(gaussian_t, 0.f, 1.f) *
-               pow(sd, 1.5f);
+        Point2f st = mapping->Map(si, &dstdx, &dstdy);
+        Float normal_s = MultiNormDist(st[0], meansAndSdsS);
+        Float normal_t = MultiNormDist(st[1], meansAndSdsT);
+        return (normal_s + normal_t) / 2.0f;
+        //---//
     }
    
   private:
     T value;
     std::unique_ptr<TextureMapping2D> mapping;
-    // Gaussian mean
-    Float mean = 0.5f;
     // Gaussian standard deviation
-    Float sd = 10.f;
+    Float sd = 0.05f;
+
+    std::vector<Point2f> meansAndSdsS;
+    std::vector<Point2f> meansAndSdsT;
 };
 
 IceKrTexture<Float> *CreateIceKrFloatTexture(const Transform &tex2world,

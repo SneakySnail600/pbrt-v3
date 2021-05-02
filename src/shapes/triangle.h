@@ -78,6 +78,14 @@ class Triangle : public Shape {
         v = &mesh->vertexIndices[3 * triNumber];
         triMeshBytes += sizeof(*this);
         faceIndex = mesh->faceIndices.size() ? mesh->faceIndices[triNumber] : 0;
+
+        // CGRA408 code
+        //---//
+        trianglePos =
+            Point3f(mesh->p.get()->x, mesh->p.get()->y, mesh->p.get()->z);
+        triangleNormal =
+            Normal3f(mesh->n.get()->x, mesh->n.get()->y, mesh->n.get()->z);
+        //---//
     }
     Bounds3f ObjectBound() const;
     Bounds3f WorldBound() const;
@@ -92,6 +100,13 @@ class Triangle : public Shape {
     // Returns the solid angle subtended by the triangle w.r.t. the given
     // reference point p.
     Float SolidAngle(const Point3f &p, int nSamples = 0) const;
+
+    // CGRA408 code
+    //---//
+    bool IsTriangle() { return true; }
+    Point3f GetTrianglePos() { return trianglePos; }
+    Normal3f GetTriangleNormal() { return triangleNormal; }
+    //---//
 
   private:
     // Triangle Private Methods
@@ -111,6 +126,12 @@ class Triangle : public Shape {
     std::shared_ptr<TriangleMesh> mesh;
     const int *v;
     int faceIndex;
+
+    // CGRA408 code
+    //---//
+    Point3f trianglePos;
+    Normal3f triangleNormal;
+    //---//
 };
 
 std::vector<std::shared_ptr<Shape>> CreateTriangleMesh(
