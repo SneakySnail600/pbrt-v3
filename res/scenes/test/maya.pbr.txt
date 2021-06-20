@@ -1,0 +1,59 @@
+# Exported for PBRT Version : v3 Book
+
+Film "image"
+	"string filename" "maya.png"
+	"integer yresolution" [540]
+	"float scale" [1.0]
+	"float diagonal" [43.2665287723]
+	"integer xresolution" [960]
+
+Sampler "halton"
+	"integer pixelsamples" [4]
+
+PixelFilter "gaussian"
+	"float ywidth" [2.0]
+	"float xwidth" [2.0]
+	"float alpha" [2.0]
+
+Integrator "path"
+	"integer maxdepth" [5]
+
+Accelerator "bvh"
+	"string splitmethod" ["sah"]
+	"integer maxnodeprims" [4]
+
+# Camera begin
+Scale -1 1 1
+LookAt 16.623929 12.467947 16.623929 0.000000 0.000000 0.000000 -0.331295 0.883452 -0.331295
+Camera "perspective"
+	"float fov" [54.4322231146]
+	"float screenwindow" [-1.0 1.0 -0.5625 0.5625]
+# Camera end
+
+WorldBegin
+	AttributeBegin
+		Rotate 90.0 0.0 1.0 0.0
+		Rotate -90.0 1.0 0.0 0.0
+		Scale -1 1 1
+		LightSource "infinite"
+			"string mapname" ["C:/Users/josho/Desktop/mitsuba_sunsky.exr"]
+			"integer nsamples" [1]
+			"rgb L" [1.0 1.0 1.0]
+	AttributeEnd
+
+	MakeNamedMaterial "lambert1"
+		"string type" ["matte"]
+		"rgb Kd" [0.5 0.5 0.5]
+
+	ObjectBegin "|pCube1"
+		# Maya Geometry : |pCube1|pCubeShape1
+		NamedMaterial "lambert1"
+		Include "__pCube1__pCubeShape1.pbrt"
+	ObjectEnd
+
+	AttributeBegin
+		# Maya Transform : |pCube1
+		ObjectInstance "|pCube1"
+	AttributeEnd
+
+WorldEnd
